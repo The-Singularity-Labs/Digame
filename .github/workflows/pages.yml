@@ -36,6 +36,12 @@ jobs:
             go-version-file: 'go.mod'
       - name: Get dependencies
         run: go mod download
+      - name: Get dependencies
+        run: go mod download
+      - name: Install Vgrun
+        run: go install github.com/vugu/vgrun
+      - name: Install Vgrun Tools
+        run: vgrun -install-tools
       - name: Build Distribution
         run: go run dist.go
       - name: Setup Pages
