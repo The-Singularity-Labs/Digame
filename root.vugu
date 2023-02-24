@@ -1,45 +1,47 @@
-<html>
+<html lang="en">
 <head>
-<title>Digame - Google News RSS Generator</title>
-<link rel="stylesheet" href="bulma.min.css">
-<link rel="icon" type="image/png" href="favicon.png">
+    <title>Digame - Google News RSS Generator</title>
+    <link rel="stylesheet" href="turretcss.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
-<div>
-    <main role="main" class="container text-center">
-
+<div class="container text-align-center">
+    <main role="main">
         <div class="mt-5">
-            <h1>Welcome to Vugu</h1>
-            <p class="lead">This page is being rendered via 
-                <a @click='event.PreventDefault();c.ShowWasm=!c.ShowWasm' href="https://webassembly.org/">WebAssembly</a>,
-                written in
-                <a @click='event.PreventDefault();c.ShowGo=!c.ShowGo' href="https://golang.org/">Go</a>
-                using
-                <a @click='event.PreventDefault();c.ShowVugu=!c.ShowVugu' href="https://vugu.org/">Vugu</a>.
+            <h1>Welcome to Digame</h1>
+            <hr>
+            <p> Enter a search query, a language, and a source country to generate a Google News RSS feed.
+
             </p>
-
-            <div vg-if='c.ShowWasm' class="alert alert-primary" role="alert">
-                <strong>WebAssembly</strong> (abbreviated Wasm) is a binary instruction format.
-                It is designed as a portable target for compilation of high-level languages like Go/C/C++/Rust, 
-                enabling deployment on the web for client and server applications.
-                <a target="_blank" href="https://webassembly.org/">Read more at webassembly.org &raquo;</a>
-            </div>
-
-            <div vg-if='c.ShowGo' class="alert alert-primary" role="alert">
-                <strong>Go</strong> is an open source programming language that makes it easy to build simple, reliable, and efficient software.
-                <a target="_blank" href="https://golang.org/">Read more at golang.org &raquo;</a>
-            </div>
-
-            <div vg-if='c.ShowVugu' class="alert alert-primary" role="alert">
-                <strong>Vugu</strong> is a modern web UI library for Go+WebAssembly.
-                It is written in pure Go, works well in most modern browsers and supports 
-                <span vg-if='time.Now().Year()==2020'>most</span> features one would expect from
-                a web framework.  It also makes a point of attempting to apply best practices 
-                from Go to web application UI development and prefers idiomatic solutions over
-                techniques that follow patterns from JavaScript wherever possible.
-                <a target="_blank" href="https://vugu.org/">Read more at vugu.org &raquo;</a>
-            </div>
-
+            <form>
+            <p class="field">
+                <vgform:Input type="text" :Value='vgform.StringPtr{&c.InputQuery}' id="form-rss-query" placeholder="Enter News Topic">
+                </vgform:Input>
+            </p>
+            <p class="field">
+                <label class="select" for="select-language">
+                <vgform:Select id="select-language" :Value='vgform.StringPtrDefault(&c.SelectedLanguage, "en")' :Options='vgform.MapOptions(c.LanguageMap())'>
+                </vgform:Select>
+                </label>
+            </p>
+            <p class="field">
+                <label class="select" for="select-country">
+                <vgform:Select id="select-country" :Value='vgform.StringPtrDefault(&c.SelectedCountry, "US")' :Options='vgform.MapOptions(c.CountryMap())'>
+                </vgform:Select>
+                </label>
+            </p>
+            <p class="field">
+                <button type="button" class="button info" @click='c.GenerateGoogleNewsRss(event)' >Generate</button>
+            </p>
+            </form>
+        </div>
+        <div>
+            <p vg-if='c.GeneratedURL != ""'>
+                <mark><a target="_blank" :href='c.GeneratedURL' vg-content='c.GeneratedURL'></a></mark>
+            </p>
         </div>
 
     </main>
@@ -48,13 +50,45 @@
 
 <script type="application/x-go">
 
-import "time"
-
+import (
+    "github.com/vugu/vugu/vgform"
+    "github.com/barbashov/iso639-3"
+    "github.com/biter777/countries"
+)
 type Root struct {
-    ShowWasm bool `vugu:"data"`
-    ShowGo bool   `vugu:"data"`
-    ShowVugu bool `vugu:"data"`
+    InputQuery string `vugu:"data"`
+    SelectedLanguage string `vugu:"data"`
+    SelectedCountry string `vugu:"data"`
+    GeneratedURL string `vugu:"data"`
 }
-    
+
+func (root *Root) LanguageMap() map[string]string {
+    languages := map[string]string{}
+
+    for _, lang := range iso639_3.LanguagesPart1{
+        languages[lang.Part1] = lang.Name
+    }
+    return languages
+}
+
+func (root *Root) CountryMap() map[string]string {
+    results := map[string]string{}
+
+    for _, country := range countries.All(){
+        results[country.Alpha2()] = country.String()
+    }
+    return results
+}
+
+func (root *Root) GenerateGoogleNewsRss(e vugu.DOMEvent){
+    root.GeneratedURL = fmt.Sprintf(
+        "https://news.google.com/rss?q=%s&hl=%s&gl=%s&ceid=%s:%s",
+        root.InputQuery,
+        root.SelectedLanguage,
+        root.SelectedCountry,
+        root.SelectedCountry,
+        root.SelectedLanguage,
+    )
+}
 </script>
 </html>

@@ -8,6 +8,8 @@ require (
 )
 
 require (
+	github.com/barbashov/iso639-3 v0.0.0-20211020172741-1f4ffb2d8d1c // indirect
+	github.com/biter777/countries v1.6.4 // indirect
 	github.com/vugu/html v0.0.0-20190914200101-c62dc20b8289 // indirect
 	github.com/vugu/xxhash v0.0.0-20191111030615-ed24d0179019 // indirect
 )
