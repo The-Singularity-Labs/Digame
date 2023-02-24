@@ -63,10 +63,28 @@ jobs:
       - name: Run Nativefier Linux
         run: nativefier --portable --platform 'linux'  --name 'Digame' 'https://the-singularity-labs.github.io/Digame'
 
-      # - name: Archive production artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: electron
-      #     path: |
-      #       dist
-      #       !dist/**/*.md
+      - name: Archive linux artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: digame-linux-x64
+          path: /home/runner/work/Digame/Digame/Digame-linux-x64
+
+      - name: Add i386 Architecture
+        run: sudo dpkg --add-architecture i386
+
+      - name: Add Wine Release Key
+        run: curl -fsSL  https://dl.winehq.org/wine-builds/Release.key | sudo apt-key add -
+
+      - name: Add Wine Repository
+        run: sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
+      
+      - name: Apt Update
+        run: sudo apt-get update
+      
+      - name: Install wine
+        run: sudo apt-get install -y --install-recommends winehq-stable winetricks winbind
+
+      - name: Run Nativefier Windows
+        run: nativefier --portable --platform 'windows'  --name 'Digame' 'https://the-singularity-labs.github.io/Digame'
+
+
