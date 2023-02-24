@@ -89,4 +89,9 @@ jobs:
       - name: Run Nativefier Windows
         run: nativefier --portable --platform 'windows'  --name 'Digame' 'https://the-singularity-labs.github.io/Digame'
 
+      - name: Archive linux artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: digame-windows-x64
+          path: /home/runner/work/Digame/Digame/Digame-win32-x64
 
