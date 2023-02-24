@@ -44,6 +44,20 @@ jobs:
         run: vgrun -install-tools
       - name: Build Distribution
         run: go run dist.go
+      - name: Find and Replace wasm_exec.js
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "/wasm_exec.js"
+          replace: "wasm_exec.js"
+          regex: false
+          include: dist/index.html
+      - name: Find and Replace main.wasm
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "/main.wasm"
+          replace: "/ain.wasm"
+          regex: false
+          include: dist/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
