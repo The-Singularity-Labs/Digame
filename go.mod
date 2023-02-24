@@ -1,9 +1,10 @@
 module github.com/vugu-examples/simple
 
-go 1.14
+go 1.20
 
 require (
-	github.com/tdewolff/minify/v2 v2.9.15 // indirect
-	github.com/vugu/vjson v0.0.0-20200505061711-f9cbed27d3d9 // indirect
-	github.com/vugu/vugu v0.3.5 // indirect
+	github.com/vugu/vjson v0.0.0-20200505061711-f9cbed27d3d9
+	github.com/vugu/vugu v0.3.5
 )
+
+require github.com/vugu/xxhash v0.0.0-20191111030615-ed24d0179019 // indirect
