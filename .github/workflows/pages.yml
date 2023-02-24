@@ -39,7 +39,7 @@ jobs:
       - name: Get dependencies
         run: go mod download
       - name: Install Vgrun
-        run: go install github.com/vugu/vgrun
+        run: go install github.com/vugu/vgrun@latest
       - name: Install Vgrun Tools
         run: vgrun -install-tools
       - name: Build Distribution
