@@ -1,13 +1,16 @@
-# simple
-Simple Vugu Example
+# Digame
+[![Deploy](https://github.com/The-Singularity-Labs/Digame/actions/workflows/pages.yml/badge.svg)](https://github.com/The-Singularity-Labs/Digame/actions/workflows/pages.yml)
 
-You can get started with:
+[![forthebadge](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)
+
+A micro app for generating Google News RSS URLs. 
+
+You can get started locally with
 
 ```sh
-go get -u github.com/vugu/vgrun
-vgrun -new-from-example=simple myexample
-cd myexample
-vgrun devserver.go
+make dev
 ```
 
-Then browse to the running server: http://localhost:8844/
+Then browse to the running server: http://127.0.0.1:8844/
