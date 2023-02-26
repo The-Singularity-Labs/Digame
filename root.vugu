@@ -1,3 +1,10 @@
+<html>
+<head>
+<title>Digame - Google News RSS Generator</title>
+<link rel="stylesheet" href="bulma.min.css">
+<link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
 <div>
     <main role="main" class="container text-center">
 
@@ -37,6 +44,7 @@
 
     </main>
 </div>
+</body>
 
 <script type="application/x-go">
 
@@ -49,3 +57,4 @@ type Root struct {
 }
     
 </script>
+</html>

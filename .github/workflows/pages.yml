@@ -44,6 +44,10 @@ jobs:
         run: vgrun -install-tools
       - name: Build Distribution
         run: go run dist.go
+      - name: Add Bulma CSS to Distribution
+        run: cp bulma.min.css dist/bulma.min.css
+      - name: Add Favicon to Distribution
+        run: cp favicon.png dist/favicon.png
       - name: Find and Replace wasm_exec.js
         uses: jacobtomlinson/gha-find-replace@v3
         with:
