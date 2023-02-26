@@ -1,4 +1,6 @@
 
+setup:
+	go mod download
 
 dev:
 	go run devserver.go
